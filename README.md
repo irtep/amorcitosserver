@@ -8,9 +8,9 @@ npm run dev
 npm run build
 is built to dist, can upload from there to server
 remember to upload:
-# index.js
-# public folder from dist
-# package.json (to root)
+1. index.js
+2. public folder from dist
+3. package.json (to root)
 then in server run npm install and restart server (not sure, if restart needed)
 
 ## build portal client
