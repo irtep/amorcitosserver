@@ -1,12 +1,15 @@
 import express, { Request, Response } from 'express';
+import 'dotenv/config';
+import path from 'path';
 
 const app : express.Application = express();
-const port: number = 3000;
+const port: number = Number(process.env.PORT);
 
+app.use(express.static(path.resolve(__dirname, "public")));
 app.use(express.json());
 
 app.get('/', (_req: Request, res: Response): void => {
-    res.send('no niin!');
+    res.sendFile('index.html', { root: 'public' });
 });
 
 app.listen(port, () => {

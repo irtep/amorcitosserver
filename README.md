@@ -1,9 +1,18 @@
-# amorcitosserver
+### amorcitosserver
 
-# run in dev
+## run in dev
 npm run dev
 (scr)
 
-# build
+## build server
 npm run build
-(dist)
+is built to dist, can upload from there to server
+remember to upload:
+# index.js
+# public folder from dist
+# package.json (to root)
+then in server run npm install and restart server (not sure, if restart needed)
+
+## build portal client
+in portalclient: npm run build
+builds to portalclient/build and also ./src/public, where it is served to test server
