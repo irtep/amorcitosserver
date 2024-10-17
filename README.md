@@ -2,11 +2,19 @@
 
 ## run in dev
 
+SERVER:
+
 in root folder:
 
 npm run dev
 
 has portal front end there in src/public
+
+PORTAL FRONT:
+
+in portalclient folder:
+
+npm start
 
 ## build dev server
 
@@ -26,4 +34,5 @@ then in server run npm install and restart server (not sure, if restart needed)
 
 in portalclient folder: npm run build
 
-builds to portalclient/build and also ./src/public, where it is served to test server
+builds to portalclient/build and also ./src/public, where it is served to test server.
+remember to build also in server, to get that to prod
