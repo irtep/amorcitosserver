@@ -5,7 +5,7 @@ const Links: React.FC = (): React.ReactElement => {
 
     return (
         <Container sx={{
-            background: "rgb(0,0,70)",
+            backgroundImage: "linear-gradient(to right, rgb(0,0,70) , rgb(0,0,70), rgb(0,0,70), black)",
             color: "orange",
             borderRadius: 2,
             margin: 1,

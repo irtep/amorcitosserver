@@ -7,7 +7,11 @@ const Main: React.FC = (): React.ReactElement => {
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
 
   return (
-    <Container>
+    <Container
+      sx={{
+        background: 'black'
+      }}
+    >
       <Box
         display="flex"
         flexDirection="row"
