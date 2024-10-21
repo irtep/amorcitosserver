@@ -22,6 +22,8 @@ in root folder:
 
 npm run build
 
+## deploy to prod
+
 is built to dist, can upload from there to server
 remember to upload these three:
 1. index.js
@@ -36,3 +38,6 @@ in portalclient folder: npm run build
 
 builds to portalclient/build and also ./src/public, where it is served to test server.
 remember to build also in server, to get that to prod
+
+## server dev mode
+open XAMPP and start server, should be at port 3306

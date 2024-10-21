@@ -1,7 +1,10 @@
-import { Container, Link } from '@mui/material';
-import React from 'react';
+import { Button, Container, Link } from '@mui/material';
+import React, { useState } from 'react';
+import { adrisLinks, LinkProps, petrisLinks } from '../data/data';
+import PageLink from './PageLink';
 
 const Links: React.FC = (): React.ReactElement => {
+    const [who, setWho] = useState<`A`|`P`>(`A`);
 
     return (
         <Container sx={{
@@ -11,11 +14,54 @@ const Links: React.FC = (): React.ReactElement => {
             margin: 1,
             padding: 5
         }}>
-            <Container
-                sx={{
-                    margin: 1
-                }}
-            >
+
+                <Button
+                    onClick={ () => {
+                        setWho('A');
+                    }}
+                >A</Button> / 
+                
+                <Button
+                    onClick={ () => {
+                        setWho('P');
+                    }}
+                >P</Button>
+                <br/>
+
+                {
+                    (who === 'A') ?
+                    <>
+                        {
+                            adrisLinks.map( (link: LinkProps, i: number) => {
+                                return(
+                                    <PageLink 
+                                        key={`pl ${i}`}
+                                        title={link.title}
+                                        href={link.href}
+                                        color={link.color}
+                                        background={link.background}
+                                    />
+                                )
+                            })
+                        }
+                    </> :
+                    <>
+                        {
+                            petrisLinks.map( (link: LinkProps, i: number) => {
+                                return(
+                                    <PageLink 
+                                        key={`pl ${i}`}
+                                        title={link.title}
+                                        href={link.href}
+                                        color={link.color}
+                                        background={link.background}
+                                    />
+                                )
+                            })
+                        }
+                    </>
+                }
+{/*
                 <Link
                     href="https://facebook.com"
                     target="_blank"
@@ -200,6 +246,7 @@ const Links: React.FC = (): React.ReactElement => {
                     S-pankki
                 </Link>
             </Container>
+
             <Container
                 sx={{
                     margin: 1
@@ -217,7 +264,7 @@ const Links: React.FC = (): React.ReactElement => {
                 >
                     Traductor
                 </Link>
-            </Container>
+            */}
         </Container>
     );
 }

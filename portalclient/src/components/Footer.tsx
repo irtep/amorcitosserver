@@ -5,13 +5,13 @@ const Footer: React.FC = (): React.ReactElement => {
 
     return (
       <Container sx={{
-        backgroundImage: "darkBlue",
+        backgroundImage: "linear-gradient(to right, rgb(0,0,70), black, black)",
         color: "white",
         borderRadius: 2,
         margin: 1
       }}>
         <Typography>
-          Version: 0.0.3
+          Version: 0.0.4
         </Typography>
       </Container>
     );

@@ -89,7 +89,7 @@ apiUsersRouter.put("/", async (req: express.Request, res: express.Response, next
 
 });
 
-apiUsersRouter.post("/", async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+apiUsersRouter.post("/", async (req: any, res: any, next: any) => {
 
     if (req.body.username &&
         req.body.password) {
@@ -97,7 +97,7 @@ apiUsersRouter.post("/", async (req: express.Request, res: express.Response, nex
         try {
 
             const allUsers = await prisma.user.findMany();
-            const existingUser = allUsers.filter(useri => req.body.username === useri.username);
+            const existingUser = allUsers.filter((useri: any) => req.body.username === useri.username);
 
             if (existingUser.length === 1) {
                 console.log('in use');
