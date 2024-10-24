@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "CommonJS",
+    "outDir": "./dist",  // relative to current directory, which is server/
+    "rootDir": "./src",  // this should match where your TypeScript source files are
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true
+  },
+  "include": ["./src/**/*"],  // now it's relative to server/
+  "exclude": ["../portal_ui/**/*"]  // if client is outside server folder, adjust path
+}

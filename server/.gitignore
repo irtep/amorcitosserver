@@ -1,0 +1,7 @@
+node_modules
+dist
+.ENV
+../portal_ui/build
+../portal_ui/node_modules
+../iz4_ui/build
+../iz_ui/node_modules

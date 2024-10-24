@@ -1,20 +1,18 @@
 ### amorcitosserver
 
+sitten iz nelosesta oma ja portal uista oma ja molemmat
+buildataan serverille ja sieltä distiin eri nimillä
+https://chatgpt.com/c/671aab52-ba40-8006-95e2-73428b609da1
+
 ## run in dev
 
-SERVER:
+open XAMPP and start all, should be at port 3306, you get dev database then
 
-in root folder:
+in server folder:
 
 npm run dev
 
-has portal front end there in src/public
-
-PORTAL FRONT:
-
-in portalclient folder:
-
-npm start
+has UI there in server/src/public
 
 ## build dev server
 
@@ -22,22 +20,32 @@ in root folder:
 
 npm run build
 
+it builds it to server/dist
+
 ## deploy to prod
 
 is built to dist, can upload from there to server
 remember to upload these three:
+
 1. index.js
 2. public folder from dist
-3. package.json (to root)
 
-then in server run npm install and restart server (not sure, if restart needed)
+if you added some dependencies, you might need to add those to package.json at server
 
-## build portal client
+if dependency change, run npm install and restart server (not sure, if restart needed)
 
-in portalclient folder: npm run build
+## client (user interface)
 
-builds to portalclient/build and also ./src/public, where it is served to test server.
+to run in dev mode go to client folder and npm start.
+
+to build:
+
+delete in server/src/public/static/js all three main.* files, they will be replaced
+
+also, delete in server/dist/public/static/js same three, for same reason.
+
+in client folder: npm run build
+
+builds to client/build and also server/src/public, where it is served to test server.
+
 remember to build also in server, to get that to prod
-
-## server dev mode
-open XAMPP and start server, should be at port 3306
