@@ -46,6 +46,7 @@
     ]
   },
   "devDependencies": {
-    "copyfiles": "^2.4.1"
+    "copyfiles": "^2.4.1",
+    "react-router-dom": "^6.27.0"
   }
 }

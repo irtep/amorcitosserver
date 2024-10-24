@@ -116,5 +116,11 @@ export const petrisLinks: LinkProps[] = [
         href: 'https://irtep.github.io/riggarage',
         color: 'white',
         background: 'darkGreen'
+    },
+    {
+        title: 'Chat GPT',
+        href: 'https://chatgpt.com/',
+        color: 'black',
+        background: 'white'
     }
 ];

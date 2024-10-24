@@ -11,7 +11,7 @@ const Footer: React.FC = (): React.ReactElement => {
         margin: 1
       }}>
         <Typography>
-          Version: 0.0.4
+          Version: 0.0.5
         </Typography>
       </Container>
     );
