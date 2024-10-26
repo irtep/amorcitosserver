@@ -13,7 +13,7 @@ apiAuthRouter.use(express.json());
 apiAuthRouter.post("/login", async (req : express.Request, res : express.Response, next : express.NextFunction) : Promise<void> => {
 
     try {
-
+        
         const user = await prisma.user.findFirst({
             where : {
                 username : req.body.username

@@ -34,7 +34,7 @@ is built to dist, can upload from there to server
 remember to upload these three:
 
 1. index.js
-2. public folder from dist
+2. public folder from dist (need to delete it first and then upload)
 
 if you added some dependencies, you might need to add those to package.json at server
 

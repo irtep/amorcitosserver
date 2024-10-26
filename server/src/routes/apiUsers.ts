@@ -49,7 +49,7 @@ apiUsersRouter.put("/", async (req: express.Request, res: express.Response, next
         next(new ErrorClass(400, "Virheellinen pyynnön body"));
 
     } else {
-        
+
         user = await prisma.user.findFirst({
             where: {
                 id: userData.id
@@ -63,7 +63,7 @@ apiUsersRouter.put("/", async (req: express.Request, res: express.Response, next
 
             // old password is ok, lets change it to new:
             try {
-    
+
                 await prisma.user.update({
                     where: {
                         id: userData.id
@@ -74,7 +74,7 @@ apiUsersRouter.put("/", async (req: express.Request, res: express.Response, next
                     }
                 });
 
-                res.status(200).json({"message: ": "changed"});
+                res.status(200).json({ "message: ": "changed" });
 
             } catch (e: any) {
                 next(new ErrorClass())
@@ -91,39 +91,43 @@ apiUsersRouter.put("/", async (req: express.Request, res: express.Response, next
 
 apiUsersRouter.post("/", async (req: any, res: any, next: any) => {
 
-    if (req.body.username &&
-        req.body.password) {
+    if (req.body.auth === process.env.AUTH1) {
+        if (req.body.username &&
+            req.body.password) {
 
-        try {
+            try {
 
-            const allUsers = await prisma.user.findMany();
-            const existingUser = allUsers.filter((useri: any) => req.body.username === useri.username);
+                const allUsers = await prisma.user.findMany();
+                const existingUser = allUsers.filter((useri: any) => req.body.username === useri.username);
 
-            if (existingUser.length === 1) {
-                console.log('in use');
-                return res.status(400).json({
-                    message: "Käyttäjätunnus on jo käytössä.",
+                if (existingUser.length === 1) {
+                    console.log('in use');
+                    return res.status(400).json({
+                        message: "Käyttäjätunnus on jo käytössä.",
+                    });
+                }
+
+                await prisma.user.create({
+                    data: {
+                        id: crypto.randomUUID(),
+                        username: req.body.username,
+                        password: crypto.createHash("SHA256").update(req.body.password).digest("hex"),
+                        admin: false
+                    }
                 });
+
+                return res.status(200).json({ message: "käyttäjätunnus luotu!" });
+
+            } catch (e: any) {
+                console.log(e);
+                next(new ErrorClass())
             }
 
-            await prisma.user.create({
-                data: {
-                    id: crypto.randomUUID(),
-                    username: req.body.username,
-                    password: crypto.createHash("SHA256").update(req.body.password).digest("hex"),
-                    admin: false
-                }
-            });
-
-            return res.status(200).json({ message: "käyttäjätunnus luotu!" });
-
-        } catch (e: any) {
-            console.log(e);
-            next(new ErrorClass())
+        } else {
+            next(new ErrorClass(400, "Virheellinen pyynnön body"));
         }
-
     } else {
-        next(new ErrorClass(400, "Virheellinen pyynnön body"));
+        next(new ErrorClass(403, "ei lupaa"));
     }
 
 });
