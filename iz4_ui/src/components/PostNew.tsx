@@ -16,7 +16,6 @@ interface Errors {
 
 const PostNew: React.FC<PropsTypesPostNew> = (props): React.ReactElement => {
   const [errors, setErrors] = useState<Errors>({ page: '', userNameOnSite: '', passwordOnSite: '' });
-
   const formRef: any = useRef<HTMLFormElement>();
 
   const save = (e: React.FormEvent): void => {
@@ -26,36 +25,29 @@ const PostNew: React.FC<PropsTypesPostNew> = (props): React.ReactElement => {
     if (formRef.current?.page.value.length < 2) { setErrors({ ...errors, page: 'vähintään 2 merkkiä vaaditaan' }) }
     else if (formRef.current?.usernameOnSite.value.length < 2) { setErrors({ ...errors, userNameOnSite: 'vähintään 2 merkkiä vaaditaan' }) }
     else if (formRef.current?.passwordOnSite.value.length < 2) { setErrors({ ...errors, passwordOnSite: 'vähintään 2 merkkiä vaaditaan' }) }
+    
     // if minimum character requirements are met, then continues:
     else {
-
       props.apiCall("POST", {
         page: String(formRef.current?.page.value),
         username: String(formRef.current?.usernameOnSite.value),
         password: String(formRef.current?.passwordOnSite.value),
       });
-
       // close this dialog
       props.setDialogOpen(false);
     }
 
-    // remove possible errors after few seconds
     setTimeout(() => {
-
       setErrors({
         page: '',
         userNameOnSite: '',
         passwordOnSite: ''
       });
-
     }, 3000);
-
   }
 
   const cancelSend = (): void => {
-
     props.setDialogOpen(false);
-
   }
 
   return <Dialog
@@ -66,7 +58,6 @@ const PostNew: React.FC<PropsTypesPostNew> = (props): React.ReactElement => {
   >
 
     <DialogTitle>Talletettava tunniste</DialogTitle>
-
 
     <DialogContent style={{ paddingTop: 10 }}>
       <Stack
@@ -116,9 +107,7 @@ const PostNew: React.FC<PropsTypesPostNew> = (props): React.ReactElement => {
 
       </Stack>
     </DialogContent>
-
   </Dialog>;
-
 }
 
 export default PostNew;

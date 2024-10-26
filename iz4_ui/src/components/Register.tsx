@@ -6,13 +6,12 @@ const Register: React.FC = () : React.ReactElement => {
     const [msg, setMsg] = useState<string>('');
     const navigate : NavigateFunction = useNavigate();
     const lomakeRef = useRef<HTMLFormElement>();
-    const rekisteroidy = async (e : React.FormEvent) : Promise<void> => {
-        
+
+    const registerUser = async (e : React.FormEvent) : Promise<void> => {
         e.preventDefault();
 
         if (lomakeRef.current?.username.value) {
-            // tarkista aina eka käyttäjätunnus, ennen salasanaa
-            // se on tietoturvan kautta parempi
+
             if (lomakeRef.current?.password.value) {
 
                 if (lomakeRef.current?.password.value === lomakeRef.current?.password2.value) {
@@ -28,7 +27,6 @@ const Register: React.FC = () : React.ReactElement => {
                     });
     
                     if (yhteys.status === 200) {
-
                         setMsg('Käyttäjätunnus on nyt rekisteröity, voit nyt kirjautua sisään');
                         setTimeout( () => { 
                             setMsg('')
@@ -53,7 +51,7 @@ const Register: React.FC = () : React.ReactElement => {
                 <Paper sx={{padding : 2}}>
                     <Box
                         component="form"
-                        onSubmit={rekisteroidy}
+                        onSubmit={registerUser}
                         ref={lomakeRef}
                         style={{
                             width: 300,

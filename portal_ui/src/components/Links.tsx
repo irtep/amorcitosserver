@@ -1,6 +1,6 @@
 import { Button, Container } from '@mui/material';
 import React, { useState } from 'react';
-import { adrisLinks, LinkProps, petrisLinks } from '../data/data';
+import { adrisLinks, LinkProps, petrisLinks } from '../data/links';
 import PageLink from './PageLink';
 
 const Links: React.FC = (): React.ReactElement => {

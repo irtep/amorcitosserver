@@ -118,8 +118,6 @@ const ShowCard: React.FC<PropsType> = (props): React.ReactElement => {
     } else {
         return (<></>);
     }
-
-
 }
 
 export default ShowCard;

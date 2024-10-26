@@ -122,5 +122,11 @@ export const petrisLinks: LinkProps[] = [
         href: 'https://chatgpt.com/',
         color: 'black',
         background: 'white'
+    },
+    {
+        title: 'Whatsapp',
+        href: 'https://web.whatsapp.com/',
+        color: 'green',
+        background: 'black'
     }
 ];

@@ -41,10 +41,7 @@ const Login: React.FC = () : React.ReactElement => {
 
                 if (connection.status === 200) {
 
-                    let {token} = await connection.json(); // tästä palautuu objekt, jossa on ominaisuus suoraan, eli
-                    // näin: res.json({ token : token }), niin sen takia aaltosulku, niin saadaan se.
-                    // tossa fetch() varmaan ominaisuus json(), jolla voidaan hakea se palautettu arvo
-                    // pitääpä tarkistaa...
+                    let {token} = await connection.json();
 
                     setToken(token);
                     setUsername(lomakeRef.current?.username.value);

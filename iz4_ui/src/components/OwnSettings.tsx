@@ -41,7 +41,6 @@ const OwnSettings: React.FC = (): React.ReactElement => {
     
             // check that new and old password all same
             if (formRef.current?.newPassword1.value === formRef.current?.newPassword2.value) {
-                
                 const payload = {
                     token: token,
                     oldPassword: formRef.current?.oldPassword.value,
@@ -49,7 +48,6 @@ const OwnSettings: React.FC = (): React.ReactElement => {
                 };
 
                 apiCall('PUT', payload, undefined, undefined, true);
-
                 navigate("/");
 
             } else {
@@ -60,13 +58,11 @@ const OwnSettings: React.FC = (): React.ReactElement => {
     
         // remove possible errors after few seconds
         setTimeout(() => {
-    
           setErrors({
             oldPassword: '',
             newPassword1: '',
             newPassword2: ''
           });
-    
         }, 3000);
     }
 
@@ -141,10 +137,6 @@ const OwnSettings: React.FC = (): React.ReactElement => {
             </>
         );
     }
-
-
-
-
 }
 
 export default OwnSettings;

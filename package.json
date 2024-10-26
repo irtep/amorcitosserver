@@ -1,0 +1,17 @@
+{
+  "name": "build_ui_and_deploy",
+  "version": "1.0.0",
+  "description": "sitten iz nelosesta oma ja portal uista oma ja molemmat buildataan serverille ja sieltä distiin eri nimillä https://chatgpt.com/c/671aab52-ba40-8006-95e2-73428b609da1",
+  "main": "build_ui_and_deploy.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "copyfiles": "^2.4.1",
+    "fs": "^0.0.1-security",
+    "fs-extra": "^11.2.0",
+    "path": "^0.12.7"
+  }
+}

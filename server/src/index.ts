@@ -23,7 +23,7 @@ const checkToken = (req: express.Request, res: express.Response, next: express.N
     }
 }
 
-// Serve static files from the React build folder (adjust path to your build output)
+// Serve static files for root route from 'public'
 app.use(express.static(path.resolve(__dirname, 'public')));
 
 // JSON parser middleware for API routes
@@ -43,14 +43,14 @@ app.use((req: express.Request, res: express.Response, next: express.NextFunction
     next();
 });
 
-// Serve index.html for the root route
+// GET request for root route to serve its index.html
 app.get('/', (_req: Request, res: Response): void => {
     res.sendFile('index.html', { root: path.resolve(__dirname, 'public') });
 });
 
-// Catch-all handler for client-side routing
-app.get('*', (_req: Request, res: Response): void => {
-    res.sendFile('index.html', { root: path.resolve(__dirname, 'public') });
+// GET request for '/iz4' route to serve its index.html
+app.get('/iz4', (_req: Request, res: Response): void => {
+    res.sendFile('index.html', { root: path.resolve(__dirname, 'public/iz4') });
 });
 
 // Start server

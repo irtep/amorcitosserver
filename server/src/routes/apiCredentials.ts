@@ -5,8 +5,8 @@ import { PrismaClient } from '@prisma/client';
 // setup of encrypting
 const crypto = require("crypto");
 const algorithm = process.env.ALGORITHM;
-const initVector = process.env.INITVECTOR;
-const securityKey = process.env.SECRETCRYPTKEY;
+const initVector = Buffer.from(process.env.INITVECTOR || '', 'hex');
+const securityKey = Buffer.from(process.env.SECRETCRYPTKEY || '', 'hex');
 
 interface Creds {
     id: number
@@ -58,7 +58,11 @@ const encryptData = async (page: string, username: string, password: string) => 
     encryptedUsername += cipher2.final("hex");
     encryptedPassword += cipher3.final("hex");
 
-    return { page: encryptedPage, username: encryptedUsername, password: encryptedPassword };
+    return { 
+        page: encryptedPage, 
+        username: encryptedUsername, 
+        password: encryptedPassword 
+    };
 }
 
 const prisma: PrismaClient = new PrismaClient();
@@ -143,8 +147,6 @@ apiCredentialsRouter.put("/:id", async (req: express.Request, res: express.Respo
 
 apiCredentialsRouter.post("/", async (req: express.Request, res: express.Response, next: express.NextFunction) => {
 
-
-
     if (req.body?.page.length > 0 &&
         req.body?.username.length > 0 &&
         req.body?.password.length > 0) {
@@ -180,7 +182,7 @@ apiCredentialsRouter.post("/", async (req: express.Request, res: express.Respons
 });
 
 apiCredentialsRouter.get("/", async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-
+    console.log('get received:  ');
     try {
 
         const mapped = await fetchAndDecrypt(res.locals.user.id);

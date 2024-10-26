@@ -14,6 +14,12 @@ npm run dev
 
 has UI there in server/src/public
 
+## test built server
+
+in server folder:
+
+npm start
+
 ## build dev server
 
 in root folder:
@@ -34,18 +40,18 @@ if you added some dependencies, you might need to add those to package.json at s
 
 if dependency change, run npm install and restart server (not sure, if restart needed)
 
-## client (user interface)
+## clients (user interfaces)
 
-to run in dev mode go to client folder and npm start.
+to run in dev mode go to portal_ui or iz4_ui folder and npm start.
 
 to build:
 
-delete in server/src/public/static/js all three main.* files, they will be replaced
+"npm run build" in portal_ui or iz4_ui directory, depending which you need.
 
-also, delete in server/dist/public/static/js same three, for same reason.
+note, that in index.ts you need to have <BrowserRouter>, if you run it in dev on its own, but before you build, change it to <BrowserRouter basename="/iz4"> or it will not work in node server
 
-in client folder: npm run build
+then go to root and "node build_ui_and_deploy.js" this copies both built ui's to relevant directories, in server directory, to both src and dist publics
 
-builds to client/build and also server/src/public, where it is served to test server.
-
-remember to build also in server, to get that to prod
+## test accounts for iz4 dev:
+petetest:test
+testi2:test12

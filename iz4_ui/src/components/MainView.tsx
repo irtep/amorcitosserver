@@ -37,7 +37,11 @@ const MainView: React.FC = (): React.ReactElement => {
       {(username === '') ?
         <>
           <Button
-            sx={{ margin: 1 }}
+            sx={{ 
+              margin: 1,
+              background: "rgb(0,0,80)",
+              color: "white"            
+            }}
             variant="contained"
             size="small"
             onClick={() => {
@@ -48,6 +52,10 @@ const MainView: React.FC = (): React.ReactElement => {
           <Button
             variant="outlined"
             size="small"
+            sx={{
+              background: "darkgreen",
+              color: "white"
+            }}
             onClick={() => {
               navigate('/register');
             }}>

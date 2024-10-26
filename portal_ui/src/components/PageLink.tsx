@@ -1,6 +1,6 @@
 import { Container, Link } from '@mui/material';
 import React from 'react';
-import { LinkProps } from '../data/data';
+import { LinkProps } from '../data/links';
 
 const PageLink: React.FC<LinkProps> = ({href, color, background, title}): React.ReactElement => {
 

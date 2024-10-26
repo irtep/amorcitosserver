@@ -15,9 +15,8 @@ const CardActions: React.FC<PropsCardActions> = (props): React.ReactElement => {
 
     if (props.selectedCard.id === '') {
         return (
-            <Typography>
-                Tervetuloa salasanapankkiin.
-            </Typography>
+            <>
+            </>
         );
     } else {
 
