@@ -40,7 +40,7 @@ apiAuthRouter.post("/login", async (req : express.Request, res : express.Respons
 
     } catch (e: any) {
         console.log(e);
-        next(new ErrorClass());
+        next(new ErrorClass(500, e));
     }
 
 });

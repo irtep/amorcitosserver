@@ -122,5 +122,23 @@ export const petrisLinks: LinkProps[] = [
         href: 'https://chatgpt.com/',
         color: 'black',
         background: 'white'
-    }
+    },
+    {
+        title: 'discord',
+        href: 'https://discord.com/',
+        color: 'white',
+        background: 'purple'
+    },
+    {
+        title: 'local 5509',
+        href: 'https://localhost:5509',
+        color: 'white',
+        background: 'darkgreen',
+    },
+    {
+        title: 'local 3333',
+        href: 'https://localhost:3333/',
+        color: 'white',
+        background: 'navy'
+    },
 ];

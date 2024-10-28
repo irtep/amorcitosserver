@@ -2,6 +2,7 @@ import express from 'express';
 import { ErrorClass } from '../errors/errorhandler';
 import { PrismaClient } from '@prisma/client';
 import crypto from 'crypto';
+import { ObjectId } from 'mongodb';
 import jwt from 'jsonwebtoken';
 
 const prisma: PrismaClient = new PrismaClient();
@@ -63,20 +64,22 @@ apiUsersRouter.put("/", async (req: express.Request, res: express.Response, next
 
             // old password is ok, lets change it to new:
             try {
-
+                console.log('psw ok');
                 await prisma.user.update({
                     where: {
                         id: userData.id
                     },
                     data: {
-                        ...user,
-                        password: crypto.createHash("SHA256").update(req.body.newPassword).digest("hex")
-                    }
+                        username: user.username,
+                        admin: user.admin,
+                        password: crypto.createHash("SHA256").update(req.body.newPassword).digest("hex"),
+                      }
                 });
-
+                console.log('all ok');
                 res.status(200).json({ "message: ": "changed" });
 
             } catch (e: any) {
+                console.log('error ', e);
                 next(new ErrorClass())
             }
 
@@ -84,9 +87,7 @@ apiUsersRouter.put("/", async (req: express.Request, res: express.Response, next
             console.log('different password');
             next(new ErrorClass(401, "Virheellinen käyttäjätunnus tai salasana"));
         }
-        console.log('user: ', user);
     }
-
 });
 
 apiUsersRouter.post("/", async (req: any, res: any, next: any) => {
@@ -96,7 +97,7 @@ apiUsersRouter.post("/", async (req: any, res: any, next: any) => {
             req.body.password) {
 
             try {
-
+                //let newID: string = crypto.randomUUID();
                 const allUsers = await prisma.user.findMany();
                 const existingUser = allUsers.filter((useri: any) => req.body.username === useri.username);
 
@@ -109,7 +110,7 @@ apiUsersRouter.post("/", async (req: any, res: any, next: any) => {
 
                 await prisma.user.create({
                     data: {
-                        id: crypto.randomUUID(),
+                        id: new ObjectId().toString(),
                         username: req.body.username,
                         password: crypto.createHash("SHA256").update(req.body.password).digest("hex"),
                         admin: false

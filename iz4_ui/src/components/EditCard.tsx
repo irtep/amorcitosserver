@@ -35,7 +35,6 @@ const EditCard: React.FC<PropsType> = (props): React.ReactElement => {
             setMgs('Muuta ainakin yhtä arvoa. Uusi arvo pitää olla vähintään kahden merkin pituinen');
 
         } else {
-
             props.apiCall("PUT", {
                 page: validFields[0] ? String(formRef.current?.page.value) : creds.page,
                 username: validFields[1] ? String(formRef.current?.usernameOnSite.value) : creds.username,

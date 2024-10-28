@@ -3,25 +3,23 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
 model credentials {
-  id       Int    @id @default(autoincrement())
-  page     String @db.VarChar(100)
-  username String @db.VarChar(300)
-  password String @db.VarChar(300)
-  userId   String @db.VarChar(100)
-  user     user   @relation(fields: [userId], references: [id], onUpdate: Restrict, map: "fk_credentials_user")
-
-  @@index([userId], map: "fk_credentials_user")
+  id       String @id @map("_id") @default(auto()) @db.ObjectId // Correctly defined ObjectId
+  page     String
+  username String
+  password String
+  userId   String
+  user     user   @relation(fields: [userId], references: [id])
 }
 
 model user {
-  id          String        @id @db.VarChar(100)
-  username    String        @db.VarChar(300)
-  password    String        @db.VarChar(300)
+  id          String @id @map("_id") @default(auto()) @db.ObjectId // Correctly defined ObjectId
+  username    String @unique // It's a good idea to ensure usernames are unique
+  password    String
   admin       Boolean
   credentials credentials[]
 }

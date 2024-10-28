@@ -1,6 +1,7 @@
 import express from 'express';
 import { ErrorClass } from '../errors/errorhandler';
 import { PrismaClient } from '@prisma/client';
+import { ObjectId } from 'mongodb';
 
 // setup of encrypting
 const crypto = require("crypto");
@@ -9,14 +10,14 @@ const initVector = Buffer.from(process.env.INITVECTOR || '', 'hex');
 const securityKey = Buffer.from(process.env.SECRETCRYPTKEY || '', 'hex');
 
 interface Creds {
-    id: number
+    id: string
     page: string
     username: string
     password: string
     userId: string
 }
 
-const fetchAndDecrypt = async (userId: string) => {
+const fetchAndDecrypt = async (userId: string): Promise<Array<Creds>> => {
 
     let creds: Array<Creds> = await prisma.credentials.findMany({
         where: {
@@ -75,14 +76,14 @@ apiCredentialsRouter.delete("/:id", async (req: express.Request, res: express.Re
     
     if (await prisma.credentials.count({
         where: {
-            id: Number(req.params.id)
+            id: req.params.id
         }
     })) {
         try {
 
             await prisma.credentials.delete({
                 where: {
-                    id: Number(req.params.id)
+                    id: req.params.id
                 }
             });
 
@@ -101,48 +102,53 @@ apiCredentialsRouter.delete("/:id", async (req: express.Request, res: express.Re
 
 
 apiCredentialsRouter.put("/:id", async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-
-    if (await prisma.credentials.count({
-        where: {
-            id: Number(req.params.id)
-        }
-    })) {
-        if ((req.body?.page.length > 0 &&
-            req.body?.username.length > 0 &&
-            req.body?.password.length > 0)) {
-
-            // encrypts the new entry with these
-            const encryptValues = await encryptData(req.body.page, req.body.username, req.body.password);
-
-            try {
-
-                await prisma.credentials.update({
-                    where: {
-                        id: Number(req.params.id)
-                    },
-                    data: {
-                        page: encryptValues.page,
-                        username: encryptValues.username,
-                        password: encryptValues.password,
-                        userId: res.locals.user.id
-                    }
-                });
-
-                const mapped = await fetchAndDecrypt(res.locals.user.id);
-
-                res.json(mapped);
-
-            } catch (e: any) {
-                next(new ErrorClass())
+    console.log('id: ', req.params.id);
+    try {
+        if (await prisma.credentials.count({
+            where: {
+                id: req.params.id
             }
-
+        })) {
+    
+            if ((req.body?.page.length > 0 &&
+                req.body?.username.length > 0 &&
+                req.body?.password.length > 0)) {
+    
+                // encrypts the new entry with these
+                const encryptValues = await encryptData(req.body.page, req.body.username, req.body.password);
+    
+                try {
+    
+                    await prisma.credentials.update({
+                        where: {
+                            id: req.params.id
+                        },
+                        data: {
+                            page: encryptValues.page,
+                            username: encryptValues.username,
+                            password: encryptValues.password,
+                            userId: res.locals.user.id
+                        }
+                    });
+    
+                    const mapped = await fetchAndDecrypt(res.locals.user.id);
+    
+                    res.json(mapped);
+    
+                } catch (e: any) {
+                    next(new ErrorClass())
+                }
+    
+            } else {
+                next(new ErrorClass(400, "Virheellinen pyynnön body"));
+            }
         } else {
-            next(new ErrorClass(400, "Virheellinen pyynnön body"));
+            next(new ErrorClass(400, "Virheellinen id"));
         }
-    } else {
-        next(new ErrorClass(400, "Virheellinen id"));
+    } catch (e: any) {
+        console.log('e: ', e);
+        next(new ErrorClass(500, "serveri"));
     }
-
 });
 
 apiCredentialsRouter.post("/", async (req: express.Request, res: express.Response, next: express.NextFunction) => {
