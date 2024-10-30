@@ -128,5 +128,23 @@ export const petrisLinks: LinkProps[] = [
         href: 'https://web.whatsapp.com/',
         color: 'green',
         background: 'black'
+    },
+    {
+        title: 'Discord',
+        href: 'https://discord.com/channels/@me',
+        color: 'white',
+        background: 'indigo'
+    },
+    {
+        title: 'Local 3333',
+        href: 'http://localhost:3333',
+        color: 'black',
+        background: 'dodgerblue'
+    },
+    {
+        title: 'Local 5509',
+        href: 'http://localhost:5509',
+        color: 'black',
+        background: 'white'
     }
 ];
