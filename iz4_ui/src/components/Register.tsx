@@ -1,33 +1,39 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { Backdrop, Box, Button, Paper, Stack, TextField, Typography } from "@mui/material";
 import { useNavigate, NavigateFunction } from 'react-router-dom';
+import { Iz4Context } from "../context/iz4context";
 
 const Register: React.FC = (): React.ReactElement => {
     const [msg, setMsg] = useState<string>('');
     const navigate: NavigateFunction = useNavigate();
-    const lomakeRef = useRef<HTMLFormElement>();
+    const formRef = useRef<HTMLFormElement>();
+
+    const {
+        modeOfUse
+      } = useContext(Iz4Context);
 
     const registerUser = async (e: React.FormEvent): Promise<void> => {
         e.preventDefault();
 
-        if (lomakeRef.current?.username.value) {
-
-            if (lomakeRef.current?.password.value) {
-
-                if (lomakeRef.current?.password.value === lomakeRef.current?.password2.value) {
-                    const yhteys = await fetch("/api/users", {
+        if (formRef.current?.username.value) {
+            if (formRef.current?.password.value) {
+                if (formRef.current?.password.value === formRef.current?.password2.value) {
+                    const url: string = (modeOfUse === "dev") ?
+                    "http://localhost:5509/api/users" :
+                    "/api/users";
+                    const connection: Response = await fetch(url, {
                         method: "POST",
                         headers: {
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({
-                            username: lomakeRef.current?.username.value,
-                            password: lomakeRef.current?.password.value,
-                            auth: lomakeRef.current?.auth.value
+                            username: formRef.current?.username.value,
+                            password: formRef.current?.password.value,
+                            auth: formRef.current?.auth.value
                         })
                     });
 
-                    if (yhteys.status === 200) {
+                    if (connection.status === 200) {
                         setMsg('Käyttäjätunnus on nyt rekisteröity, voit nyt kirjautua sisään');
                         setTimeout(() => {
                             setMsg('')
@@ -35,12 +41,12 @@ const Register: React.FC = (): React.ReactElement => {
                         }, 5000);
 
 
-                    } else if (yhteys.status === 400) {
+                    } else if (connection.status === 400) {
                         setMsg('Käyttäjänimi on jo rekisteröity');
                         setTimeout(() => { setMsg('') }, 10000);
                     }
 
-                    else if (yhteys.status === 403) {
+                    else if (connection.status === 403) {
                         setMsg('Ei lupaa, pyydä lupa adminilta');
                         setTimeout(() => { setMsg('') }, 10000);
                     }
@@ -59,7 +65,7 @@ const Register: React.FC = (): React.ReactElement => {
                 <Box
                     component="form"
                     onSubmit={registerUser}
-                    ref={lomakeRef}
+                    ref={formRef}
                     style={{
                         width: 300,
                         backgroundColor: "#fff",

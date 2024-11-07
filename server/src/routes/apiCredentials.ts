@@ -18,7 +18,6 @@ interface Creds {
 }
 
 const fetchAndDecrypt = async (userId: string): Promise<Array<Creds>> => {
-
     let creds: Array<Creds> = await prisma.credentials.findMany({
         where: {
             userId: userId
@@ -46,7 +45,6 @@ const fetchAndDecrypt = async (userId: string): Promise<Array<Creds>> => {
 }
 
 const encryptData = async (page: string, username: string, password: string) => {
-    // encrypts the new entry with these
     const cipher1 = crypto.createCipheriv(algorithm, securityKey, initVector);
     const cipher2 = crypto.createCipheriv(algorithm, securityKey, initVector);
     const cipher3 = crypto.createCipheriv(algorithm, securityKey, initVector);

@@ -17,6 +17,8 @@ export const Iz4Provider: React.FC<Props> = (props: Props): React.ReactElement =
     error: "",
     fetchReady: true
   });
+  // Change this to match 'prod' or 'dev' depending, what you need
+  const modeOfUse: 'prod' | 'dev' = 'dev';
 
   const apiCall = async (
     method?: string,
@@ -31,17 +33,19 @@ export const Iz4Provider: React.FC<Props> = (props: Props): React.ReactElement =
       error: ""
     });
 
-    let url = `/api/credentials`;
+    let prodUrl: string = `/api/credentials`;
+    let devUrl: string = `http://localhost:5509/api/credentials`;
     let authToken: string = token;
 
     // if it is PUT or DELETE, url needs the id:
     if (method === "PUT" || method === "DELETE") {
-      //url = `/api/credentials/${JSON.stringify(id)}`;
-      url = `/api/credentials/${id}`;
+      prodUrl = `/api/credentials/${id}`;
+      devUrl = `http://localhost:5509/api/credentials/${id}`;
     }
 
     if (isUsersPasswordChange) {
-      url = '/api/users';
+      prodUrl = '/api/users';
+      devUrl =  'http://localhost:5509/api/users';
     }
 
     // in some cases token statevariable is empty, so then user needs to send it by importToken
@@ -69,15 +73,13 @@ export const Iz4Provider: React.FC<Props> = (props: Props): React.ReactElement =
 
     try {
 
-      const yhteys = await fetch(url, settings);
+      let chosenUrl = (modeOfUse === 'dev')? devUrl: prodUrl;
+      const connection: Response = await fetch(chosenUrl, settings);
 
-      if (yhteys.status === 200) {
-
-
+      if (connection.status === 200) {
         if (isUsersPasswordChange) {
 
           setMessage('Salasanasi on vaihdettu!');
-
           setApiData({
             ...apiData,
             fetchReady: true
@@ -91,7 +93,7 @@ export const Iz4Provider: React.FC<Props> = (props: Props): React.ReactElement =
 
           setApiData({
             ...apiData,
-            allCredentials: await yhteys.json(),
+            allCredentials: await connection.json(),
             fetchReady: true
           });
 
@@ -110,12 +112,10 @@ export const Iz4Provider: React.FC<Props> = (props: Props): React.ReactElement =
 
         let errorText: string = "";
 
-        switch (yhteys.status) {
-
+        switch (connection.status) {
           case 401: errorText = "Vanha salasana meni väärin. Salasanaa ei vaihdettu."; break;
           case 400: errorText = "Virhe pyynnön tiedoissa"; break;
           default: errorText = "Palvelimella tapahtui odottamaton virhe"; break;
-
         }
 
         setApiData({
@@ -123,26 +123,21 @@ export const Iz4Provider: React.FC<Props> = (props: Props): React.ReactElement =
           error: errorText,
           fetchReady: true
         });
-
         setTimeout(() => {
           setApiData({
             ...apiData,
             error: ''
           });
         }, 3000);
-
       }
 
     } catch (e: any) {
-
       setApiData({
         ...apiData,
         error: "Palvelimeen ei saada yhteyttä",
         fetchReady: true
       });
-
     }
-
   }
 
   useEffect(() => {
@@ -173,7 +168,8 @@ export const Iz4Provider: React.FC<Props> = (props: Props): React.ReactElement =
       dialogOpen, setDialogOpen,
       message, setMessage,
       apiData, setApiData,
-      apiCall
+      apiCall,
+      modeOfUse
     }}>
       {props.children}
     </Iz4Context.Provider>

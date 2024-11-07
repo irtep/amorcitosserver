@@ -13,7 +13,8 @@ const Login: React.FC = () : React.ReactElement => {
 
     const {
         setToken,
-        setUsername
+        setUsername,
+        modeOfUse
       } = useContext(Iz4Context);
 
     const navigate : NavigateFunction = useNavigate();
@@ -27,8 +28,10 @@ const Login: React.FC = () : React.ReactElement => {
         if (lomakeRef.current?.username.value) {
             
             if (lomakeRef.current?.password.value) {
-
-                const connection = await fetch("/api/auth/login", {
+                const url: string = (modeOfUse === "dev") ?
+                    "http://localhost:5509/api/auth/login" :
+                    "/api/auth/login";
+                const connection = await fetch(url, {
                     method : "POST",
                     headers : {
                         'Content-Type' : 'application/json'
