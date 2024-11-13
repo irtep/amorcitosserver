@@ -55,5 +55,4 @@ Also, at context api (iz4context.tsx), change in line 21, modeOfUse to dev or pr
 then to build, first check, that you have modeOfUse 'prod', and BrowserRouter with basename, and then go to root and "node build_ui_and_deploy.js" this copies both built ui's to relevant directories, in server directory, to both src and dist publics
 
 ## test accounts for iz4 dev:
-petetest:test
-testi2:test12
+test2:test2
