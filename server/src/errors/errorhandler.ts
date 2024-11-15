@@ -2,17 +2,17 @@ import express from 'express';
 
 export class ErrorClass extends Error {
     status : number
-    viesti : string
-    constructor(status? : number, viesti? : string) {
+    errMsg : string
+    constructor(status? : number, errMsg? : string) {
         super();
         this.status = status || 500;
-        this.viesti = viesti || "Unexpected error on server.";
+        this.errMsg = errMsg || "Unexpected error on server.";
     }
 }
 
 const errorhandler = (err : ErrorClass, req : express.Request, res : express.Response, next : express.NextFunction) => {
-    res.status(err.status).json({virhe : err.viesti});
+    res.status(err.status).json({virhe : err.errMsg});
     next();
 }
 
-export default errorhandler;
+export { errorhandler };

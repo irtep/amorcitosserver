@@ -97,12 +97,10 @@ apiUsersRouter.post("/", async (req: any, res: any, next: any) => {
             req.body.password) {
 
             try {
-                //let newID: string = crypto.randomUUID();
                 const allUsers = await prisma.user.findMany();
                 const existingUser = allUsers.filter((useri: any) => req.body.username === useri.username);
 
                 if (existingUser.length === 1) {
-                    console.log('in use');
                     return res.status(400).json({
                         message: "Käyttäjätunnus on jo käytössä.",
                     });

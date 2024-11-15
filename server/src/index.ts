@@ -5,7 +5,7 @@ import path from 'path';
 import apiCredentialsRouter from './routes/apiCredentials';
 import apiAuthRouter from './routes/apiAuth';
 import apiUsersRouter from './routes/apiUsers';
-import errorhandler from './errors/errorhandler';
+import { ErrorClass, errorhandler } from './errors/errorhandler';
 import jwt from 'jsonwebtoken';
 import cors from 'cors';
 
@@ -31,14 +31,12 @@ const checkToken = (req: express.Request, res: express.Response, next: express.N
         next();
     } catch (e: any) {
         console.log('jwtError: ', e);
-        res.status(401).json({});
+        next(new ErrorClass(401, "Unauthorized access."));
     }
 }
 
-// Serve static files for root route from 'public'
 app.use(express.static(path.resolve(__dirname, 'public')));
 
-// JSON parser middleware for API routes
 app.use(express.json());
 
 // API routes for IZ4
@@ -50,7 +48,7 @@ app.use(errorhandler);
 // Custom 404 handler for API routes
 app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
     if (!res.headersSent) {
-        res.status(404).json({ message: "invalid route" });
+        next(new ErrorClass(404, "Invalid route."));
     }
     next();
 });
