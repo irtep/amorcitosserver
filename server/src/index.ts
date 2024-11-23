@@ -7,12 +7,15 @@ import apiAuthRouter from './routes/apiAuth';
 import apiUsersRouter from './routes/apiUsers';
 import { errorhandler, ErrorClass } from './errors/errorhandler';
 import jwt from 'jsonwebtoken';
+/* enable for dev, when needed
 import cors from 'cors';
+*/
 
 const app: express.Application = express();
 const port: number = Number(process.env.PORT);
 
 // CORS for development mode
+/* enable for dev, when needed
 const corsOptions: cors.CorsOptions = {
     origin: 'http://localhost:3000', // '*' would be all
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
@@ -21,7 +24,7 @@ const corsOptions: cors.CorsOptions = {
   };
 
 app.use(cors(corsOptions));
-
+*/
 // Middleware to check JWT token
 const checkToken = (req: express.Request, res: express.Response, next: express.NextFunction) => {
     console.log('checking');

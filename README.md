@@ -45,14 +45,12 @@ to run in dev mode go to portal_ui or iz4_ui folder and npm start.
 
 to build:
 
-"npm run build" in portal_ui or iz4_ui directory, depending which you need.
-
-important:
-
-note, that in index.ts you need to have <BrowserRouter>, if you run it in dev on its own, but before you build, change it to <BrowserRouter basename="/iz4"> or it will not work in node server
+for iz4_ui:  note, that in index.ts you need to have <BrowserRouter>, if you run it in dev on its own, but before you build, change it to <BrowserRouter basename="/iz4"> or it will not work in node server
 Also, at context api (iz4context.tsx), change in line 21, modeOfUse to dev or prod, whichever you need
 
-then to build, first check, that you have modeOfUse 'prod', and BrowserRouter with basename, and then go to root and "node build_ui_and_deploy.js" this copies both built ui's to relevant directories, in server directory, to both src and dist publics
+then to build, first check, that you have modeOfUse 'prod', and BrowserRouter with basename, then
+"npm run build" in portal_ui or iz4_ui directory, depending which you need.
+and then go to root and "node build_ui_and_deploy.js" this copies both built ui's to relevant directories, in server directory, to both src and dist publics
 
 ## test accounts for iz4 dev:
 test2:test2

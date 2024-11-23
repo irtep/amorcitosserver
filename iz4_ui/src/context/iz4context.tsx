@@ -18,7 +18,7 @@ export const Iz4Provider: React.FC<Props> = (props: Props): React.ReactElement =
     fetchReady: true
   });
   // Change this to match 'prod' or 'dev' depending, what you need
-  const modeOfUse: 'prod' | 'dev' = 'dev';
+  const modeOfUse: String = 'prod';
 
   const apiCall = async (
     method?: string,
