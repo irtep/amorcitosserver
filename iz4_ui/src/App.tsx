@@ -1,4 +1,4 @@
-import { Container } from '@mui/material';
+import { Box, Container } from '@mui/material';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Iz4Provider } from './context/iz4context';
@@ -12,22 +12,30 @@ import Footer from './components/Footer';
 const App: React.FC = (): React.ReactElement => {
 
   return (
-    <Container sx={{
+    <Box sx={{
+      display: 'flex',
+      flexDirection: 'column',
       width: "100vw",
       height: "100vh",
       padding: 1
     }}>
       <Iz4Provider>
         <Header />
-        <Routes>
-          <Route path="/" element={<MainView />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/settings" element={<OwnSettings />} />
-        </Routes>
+        <Box sx={{
+          flex: 1, // This ensures the content takes up the remaining space
+          overflowY: 'auto', // Allows scrolling if content overflows
+          paddingBottom: '64px', // Add padding equal to footer height
+        }}>
+          <Routes>
+            <Route path="/" element={<MainView />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/settings" element={<OwnSettings />} />
+          </Routes>
+        </Box>
         <Footer />
       </Iz4Provider>
-    </Container>
+    </Box>
   );
 
 }

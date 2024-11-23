@@ -104,16 +104,14 @@ export const Iz4Provider: React.FC<Props> = (props: Props): React.ReactElement =
             setTimeout(() => {
               setMessage('')
             }, 3000);
-
           }
         }
-
       } else {
 
         let errorText: string = "";
 
         switch (connection.status) {
-          case 401: errorText = "Vanha salasana meni väärin. Salasanaa ei vaihdettu."; break;
+          case 401: errorText = "Ei lupaa tietoihin / toimenpiteeseen."; break;
           case 400: errorText = "Virhe pyynnön tiedoissa"; break;
           default: errorText = "Palvelimella tapahtui odottamaton virhe"; break;
         }

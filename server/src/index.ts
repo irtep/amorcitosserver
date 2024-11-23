@@ -5,7 +5,7 @@ import path from 'path';
 import apiCredentialsRouter from './routes/apiCredentials';
 import apiAuthRouter from './routes/apiAuth';
 import apiUsersRouter from './routes/apiUsers';
-import { ErrorClass, errorhandler } from './errors/errorhandler';
+import { errorhandler, ErrorClass } from './errors/errorhandler';
 import jwt from 'jsonwebtoken';
 import cors from 'cors';
 
@@ -14,10 +14,10 @@ const port: number = Number(process.env.PORT);
 
 // CORS for development mode
 const corsOptions: cors.CorsOptions = {
-    origin: 'http://localhost:3000', // or '*' for all origins
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], // specify allowed methods
-    allowedHeaders: ['Content-Type', 'Authorization'], // specify allowed headers
-    credentials: true, // enable if credentials are required
+    origin: 'http://localhost:3000', // '*' would be all
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
   };
 
 app.use(cors(corsOptions));
