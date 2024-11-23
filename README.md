@@ -52,5 +52,7 @@ then to build, first check, that you have modeOfUse 'prod', and BrowserRouter wi
 "npm run build" in portal_ui or iz4_ui directory, depending which you need.
 and then go to root and "node build_ui_and_deploy.js" this copies both built ui's to relevant directories, in server directory, to both src and dist publics
 
+can test built ui, afterwards, in server folder: npm start. this uses dist for ui
+
 ## test accounts for iz4 dev:
 test2:test2
