@@ -5,3 +5,4 @@ dist
 ../portal_ui/node_modules
 ../iz4_ui/build
 ../iz_ui/node_modules
+../drive_or_lose/node_modules

@@ -14,4 +14,7 @@
  * create new user: username, password, admin true of false
  * see list of users and can delete, active or passive
  * header could be full width
+ * - when clicked "show icon", should scroll to up
+ * - mobile support
+ * - enhance security measures
  */
