@@ -8,14 +8,14 @@ import apiUsersRouter from './routes/apiUsers';
 import { errorhandler, ErrorClass } from './errors/errorhandler';
 import jwt from 'jsonwebtoken';
 /* enable for dev, when needed*/
-import cors from 'cors';
+//import cors from 'cors';
 
 
 const app: express.Application = express();
 const port: number = Number(process.env.PORT);
 
 // CORS for development mode
-/* enable for dev, when needed*/
+/* enable for dev, when needed
 const corsOptions: cors.CorsOptions = {
     origin: 'http://localhost:3000', // '*' would be all
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
@@ -24,7 +24,7 @@ const corsOptions: cors.CorsOptions = {
   };
 
 app.use(cors(corsOptions));
-
+*/
 // Middleware to check JWT token
 const checkToken = (req: express.Request, res: express.Response, next: express.NextFunction) => {
     console.log('checking');
@@ -64,6 +64,11 @@ app.get('/', (_req: Request, res: Response): void => {
 // GET request for '/iz4' route to serve its index.html
 app.get('/iz4', (_req: Request, res: Response): void => {
     res.sendFile('index.html', { root: path.resolve(__dirname, 'public/iz4') });
+});
+
+// GET request for '/charred' route to serve its index.html
+app.get('/charred', (_req: Request, res: Response): void => {
+    res.sendFile('index.html', { root: path.resolve(__dirname, 'public/charred') });
 });
 
 // Start server
