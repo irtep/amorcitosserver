@@ -1,5 +1,6 @@
 import React, { createContext, useEffect, useState } from 'react';
-import { ApiData, CredentialsTypes, FetchSettings, UserPswChangeData } from '../components/sharedInterfaces/sharedInterfaces';
+import { ApiData, CredentialsTypes, FetchSettings, UserPswChangeData } from '../sharedInterfaces/sharedInterfaces';
+import useIsMobile from '../customHooks/useIsMobile';
 
 export const Iz4Context: React.Context<any> = createContext(undefined);
 
@@ -17,6 +18,7 @@ export const Iz4Provider: React.FC<Props> = (props: Props): React.ReactElement =
     error: "",
     fetchReady: true
   });
+  const isMobile: boolean = useIsMobile();
   // Change this to match 'prod' or 'dev' depending, what you need
   const modeOfUse: String = 'prod';
 
@@ -45,7 +47,7 @@ export const Iz4Provider: React.FC<Props> = (props: Props): React.ReactElement =
 
     if (isUsersPasswordChange) {
       prodUrl = '/api/users';
-      devUrl =  'http://localhost:5509/api/users';
+      devUrl = 'http://localhost:5509/api/users';
     }
 
     // in some cases token statevariable is empty, so then user needs to send it by importToken
@@ -59,7 +61,6 @@ export const Iz4Provider: React.FC<Props> = (props: Props): React.ReactElement =
     };
 
     if (method === "POST" || method === "PUT") {
-
       settings = {
         ...settings,
         headers: {
@@ -68,12 +69,10 @@ export const Iz4Provider: React.FC<Props> = (props: Props): React.ReactElement =
         },
         body: JSON.stringify(credentials)
       }
-
     }
 
     try {
-
-      let chosenUrl = (modeOfUse === 'dev')? devUrl: prodUrl;
+      let chosenUrl = (modeOfUse === 'dev') ? devUrl : prodUrl;
       const connection: Response = await fetch(chosenUrl, settings);
 
       if (connection.status === 200) {
@@ -111,7 +110,10 @@ export const Iz4Provider: React.FC<Props> = (props: Props): React.ReactElement =
         let errorText: string = "";
 
         switch (connection.status) {
-          case 401: errorText = "Ei lupaa tietoihin / toimenpiteeseen."; break;
+          case 401: 
+            errorText = "Ei lupaa tietoihin / toimenpiteeseen."; 
+            logUserOut();
+            break;
           case 400: errorText = "Virhe pyynnön tiedoissa"; break;
           default: errorText = "Palvelimella tapahtui odottamaton virhe"; break;
         }
@@ -138,8 +140,18 @@ export const Iz4Provider: React.FC<Props> = (props: Props): React.ReactElement =
     }
   }
 
-  useEffect(() => {
+  const logUserOut = () => {
+    setUsername('');
+    setToken('');
+    localStorage.setItem("uDetails", '');
+    setApiData({
+      ...apiData,
+      allCredentials: [],
+      fetchReady: true
+    });
+  }
 
+  useEffect(() => {
     // logs in, if user did not logged out
     const loggedUserJSON = window.localStorage.getItem('uDetails');
 
@@ -153,7 +165,6 @@ export const Iz4Provider: React.FC<Props> = (props: Props): React.ReactElement =
   }, []);
 
   useEffect(() => {
-
     if (username) {
       apiCall();
     }
@@ -167,7 +178,9 @@ export const Iz4Provider: React.FC<Props> = (props: Props): React.ReactElement =
       message, setMessage,
       apiData, setApiData,
       apiCall,
-      modeOfUse
+      modeOfUse,
+      logUserOut,
+      isMobile
     }}>
       {props.children}
     </Iz4Context.Provider>
