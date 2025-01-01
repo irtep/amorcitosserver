@@ -8,14 +8,13 @@ import apiUsersRouter from './routes/apiUsers';
 import { errorhandler, ErrorClass } from './errors/errorhandler';
 import jwt from 'jsonwebtoken';
 /* enable for dev, when needed*/
-//import cors from 'cors';
-
+import cors from 'cors';
 
 const app: express.Application = express();
 const port: number = Number(process.env.PORT);
 
 // CORS for development mode
-/* enable for dev, when needed
+// enable for dev, when needed
 const corsOptions: cors.CorsOptions = {
     origin: 'http://localhost:3000', // '*' would be all
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
@@ -24,17 +23,17 @@ const corsOptions: cors.CorsOptions = {
   };
 
 app.use(cors(corsOptions));
-*/
+
 // Middleware to check JWT token
 const checkToken = (req: express.Request, res: express.Response, next: express.NextFunction) => {
     console.log('checking');
     try {
-        let token: string = req.headers.authorization!.split(" ")[1];
+        const token: string = req.headers.authorization!.split(" ")[1];
         res.locals.user = jwt.verify(token, String(process.env.ACCESS_TOKEN_KEY));
         next();
     } catch (e: any) {
         console.log('jwtError: ', e);
-        next(new ErrorClass(401, "Unauthorized access."));
+        next({ status: 401, message: "Unauthorized access." });
     }
 }
 
