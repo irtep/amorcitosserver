@@ -65,10 +65,10 @@ app.get('/iz4', (_req: Request, res: Response): void => {
     res.sendFile('index.html', { root: path.resolve(__dirname, 'public/iz4') });
 });
 
-// GET request for '/charred' route to serve its index.html
-app.get('/charred', (_req: Request, res: Response): void => {
-    res.sendFile('index.html', { root: path.resolve(__dirname, 'public/charred') });
-});
+    // GET request for '/izFoods' route to serve its index.html
+    app.get('/izFoods', (_req: Request, res: Response): void => {
+        res.sendFile('index.html', { root: path.resolve(__dirname, 'public/izFoods') });
+    });
 
 // Start server
 app.listen(port, () => {
